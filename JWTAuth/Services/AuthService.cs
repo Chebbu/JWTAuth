@@ -54,6 +54,12 @@ namespace JWTAuth.Services
 
         public async  Task<User?> RegisterAsync(UserDto request)
         {
+            if (string.IsNullOrWhiteSpace(request.Username))
+                throw new ArgumentException("username is required");
+
+            if (string.IsNullOrWhiteSpace(request.Password))
+                throw new ArgumentException("password is required");
+
             if (await context.Users.AnyAsync(u => u.Username == request.Username))
                 return null;
 
